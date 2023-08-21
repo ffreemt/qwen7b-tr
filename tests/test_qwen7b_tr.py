@@ -1,7 +1,6 @@
 """Test qwen7b_tr."""
 # pylint: disable=broad-except
-from qwen7b_tr import __version__
-from qwen7b_tr import qwen7b_tr
+from qwen7b_tr import __version__, qwen7b_tr
 
 
 def test_version():

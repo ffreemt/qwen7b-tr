@@ -49,7 +49,7 @@ def qwen7b_tr(
     max_new_tokens: int = 256,
     temperature: float = 0.81,
     repetition_penalty: float = 1.1,
-    top_k: float =0.,
+    top_k: float = 0.0,
     top_p: float = 0.9,
     system_prompt: str = "You are a helpful assistant",
 ) -> str:
@@ -87,6 +87,7 @@ def qwen7b_tr(
         res = str(exc)
 
     return res
+
 
 def _version_callback(value: bool) -> None:
     if value:

@@ -14,6 +14,40 @@ pip install qwen7b-tr
 
 ## Use it
 ```python
-from qwen7b_tr import qwen7b_tr
+from qwen7b_tr.__main__ import qwen7b_tr
 
+# This is in fact just chat with the qwen-7b-chat model
+print(qwen7b_tr("你好"))
+# 你好！有什么我能帮助你的吗？
 ```
+
+## From command line
+```
+python -m qwen7b_tr test abc
+# or qwen7b-tr test abc
+```
+```bash
+三个版本如下：
+
+1. 测试abc
+
+2. ABC测试
+
+3. 三号测试 ABC
+```
+## Help and Manual
+```
+python -m qwen7b_tr --help
+
+# or
+qwen7b-tr --help
+```
+
+## Develop and Debug
+```
+set LOGURU_LEVEL=TRACE
+
+# or in linux
+export LOGURU_LEVEL=TRACE
+```
+to see a lot of debug messages

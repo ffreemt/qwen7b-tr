@@ -146,7 +146,7 @@ def _version_callback(value: bool) -> None:
 
 NUMB = 3
 TO_LANG = "中文"
-USER_PROMPT_TEMPL = "翻成中文。列出{numb}个版本。"
+USER_PROMPT_TEMPL = "翻成{to_lang}。列出{numb}个版本。"
 
 
 @app.command()
@@ -241,7 +241,11 @@ def main(
     if to_lang is None:
         to_lang = TO_LANG
     if user_prompt is None:
-        user_prompt = USER_PROMPT_TEMPL.format(numb=numb)
+        user_prompt = USER_PROMPT_TEMPL.format(
+            numb=numb,
+            to_lang=to_lang,
+        )
+    logger.trace(f"{user_prompt=}")
 
     if question is not None:
         text = question[:]
@@ -255,18 +259,25 @@ def main(
         )
         text_str = pyperclip.paste()
     else:
-        if text is None:
+        if not text:
             # if no text provided, copy from clipboard
             logger.trace(
                 "No text provided, translating the content of the clipboard..."
             )
             print(
-                "[yellow]No text provided[/yellow], [green]translating the content of the clipboard[/green]..."
+                "\t[yellow]No text provided[/yellow], [green]translating the content of the clipboard[/green]..."
             )
             text_str = pyperclip.paste()
         else:
             text_str = " ".join(text).strip()
         if not text_str:
+            # somehow still no text collected
+            logger.trace(
+                "\tNo text provided, translating the content of the clipboard..."
+            )
+            print(
+                "\t[yellow]No text provided[/yellow], [green]translating the content of the clipboard[/green]..."
+            )
             text_str = pyperclip.paste()
     try:
         text_str = text_str.strip()
@@ -274,6 +285,7 @@ def main(
         logger.error(exc)
         text_str = ""
     if not text_str:
+        print("[yellow]Nothing to do...[/yellow]")
         raise typer.Exit(1)
 
     logger.trace(f"text_str: {text_str}")
@@ -291,6 +303,9 @@ def main(
     except Exception as exc:
         logger.error(exc)
         raise typer.Exit()
+    print()
+    print(text_str)
+    print()
     print(res)
 
 

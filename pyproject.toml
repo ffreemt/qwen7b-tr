@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "qwen7b-tr"
 version = "0.1.0-alpha.0"
-description = "Translate via qwen-7b huggingface api"
+description = "Translate/Chat via qwen-7b huggingface api"
 authors = ["ffreemt"]
 license = "MIT"
 readme = "README.md"

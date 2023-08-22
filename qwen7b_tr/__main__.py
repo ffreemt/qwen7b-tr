@@ -138,7 +138,9 @@ def qwen7b_tr(
 
 def _version_callback(value: bool) -> None:
     if value:
-        typer.echo(f"{app.info.name} v.{__version__} -- translate/chat via qwen-7b huggingface api")
+        typer.echo(
+            f"{app.info.name} v.{__version__} -- translate/chat via qwen-7b huggingface api"
+        )
         raise typer.Exit()
 
 

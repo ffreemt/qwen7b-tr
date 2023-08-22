@@ -154,6 +154,7 @@ def main(
     question: Optional[List[str]] = typer.Argument(
         None,
         help="Source text or question.",
+        show_default=False,
     ),
     clipb: Optional[bool] = typer.Option(
         None,
@@ -166,12 +167,14 @@ def main(
         "--to-lang",
         "-t",
         help=f"Target language when using the default prompt. [default: {TO_LANG}]",
+        show_default=False,
     ),
     numb: int = typer.Option(
         None,
         "--numb",
         "-n",
         help=f"number of translation variants when using the default prompt. [default {NUMB}]",
+        show_default=False,
     ),
     max_new_tokens: Optional[int] = typer.Option(
         None,
@@ -192,18 +195,21 @@ def main(
         "--repetition-penalty",
         "--rep",
         help=f"Repetition penalty. [default: {param_def.get('repetition_penalty')}]",
+        show_default=False,
     ),
     top_k: Optional[int] = typer.Option(
         None,
         "--top-k",
         "--top_k",
         help=f"Top_k. [default: {param_def.get('top_k')}]",
+        show_default=False,
     ),
     top_p: Optional[float] = typer.Option(
         None,
         "--top-p",
         "--top_p",
         help=f"Top_p. [default: {param_def.get('top_p')}]",
+        show_default=False,
     ),
     user_prompt: Optional[str] = typer.Option(
         None,

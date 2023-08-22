@@ -1,5 +1,5 @@
 """Init."""
-__version__ = "0.1.0a0"
+__version__ = "0.1.0a1"
 
 # from qwen7b_tr.__main__ import qwen7b_tr  # cyclic-import
 

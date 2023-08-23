@@ -51,7 +51,8 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: exe
-          path: build/qwen7b-tr.exe
+          # path: build/qwen7b-tr.exe
+          path: qwen7b-tr.dist/qwen7b-tr.exe
 
 
       # - name: Zip the Build

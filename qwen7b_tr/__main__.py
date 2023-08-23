@@ -58,7 +58,7 @@ param_def = dict(
         [256, 0.81, 1.1, 0, 0.9, "You are a helpful assistang"],
     )
 )
-
+api_url = "https://mikeee-qwen-7b-chat.hf.space/"
 
 def qwen7b_tr(
     text: Optional[str] = None,
@@ -89,7 +89,7 @@ def qwen7b_tr(
     try:
         qwen7b_tr.client
     except Exception:
-        qwen7b_tr.client = Client("https://mikeee-qwen-7b-chat.hf.space/")
+        qwen7b_tr.client = Client(api_url)
     client = qwen7b_tr.client
 
     # make a copy of locals()
@@ -298,6 +298,7 @@ def main(
     ).strip()
     logger.trace(f"{text=}")
 
+    typer.secho("\tdiggin...", fg=typer.colors.MAGENTA)
     try:
         res = qwen7b_tr(text)
     except Exception as exc:

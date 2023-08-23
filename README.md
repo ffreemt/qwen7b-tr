@@ -35,12 +35,87 @@ python -m qwen7b_tr test abc
 
 3. 三号测试 ABC
 ```
+If no text is provided, the content of the clipboard will be used.
+```
+python -m qwen7b_tr
+```
+```bash
+# Assume the clipboard contains `available`
+        No text provided, translating the content of the clipboard...
+        digging https://mikeee-qwen-7b-chat.hf.space/...
+Loaded as API: https://mikeee-qwen-7b-chat.hf.space/ ✔
+
+available
+
+以下是三个不同的中文版本：
+
+1. 可用的
+
+2. 可获得的
+
+3. 有效的
+```
+Target language can be specified with -t
+```
+python -m qwen7b_tr -t 德语
+```
+```
+        No text provided, translating the content of the clipboard...
+        diggin...
+Loaded as API: https://mikeee-qwen-7b-chat.hf.space/ ✔
+
+available
+
+1. "Verfügbare"
+  2. "Sollte"
+  3. "Da ist"
+```
+```
+python -m qwen7b_tr -t 英语 我国服务贸易“朋友圈”日益扩大
+        diggin...
+Loaded as API: https://mikeee-qwen-7b-chat.hf.space/ ✔
+
+我国服务贸易“朋友圈”日益扩大
+
+1. China's circle of service trade friends is expanding.
+  2. The circle of China's service trade partners is growing larger.
+  3. China's circle of service trade acquaintances is increasing.
+```
+
 ## Help and Manual
 ```
 python -m qwen7b_tr --help
 
 # or
 qwen7b-tr --help
+```
+```bash
+python -m qwen7b_tr --help
+Usage: python -m qwen7b_tr [OPTIONS] [QUESTION]...
+
+  Translate via qwen-7b-chat huggingface API.
+
+Arguments:
+  [QUESTION]...  Source text or question.
+
+Options:
+  -c, --clipb                     Use clipboard content if set or if
+                                  `question` is empty.
+  -t, --to-lang TEXT              Target language when using the default
+                                  prompt. [default: 中文]
+  -n, --numb INTEGER              number of translation variants when using
+                                  the default prompt. [default 3]
+  -m, --max-new-tokens INTEGER    Max new tokens. [default: 256]
+  --temperature, --temp INTEGER   Temperature. [default: 0.81]
+  --repetition-penalty, --rep FLOAT
+                                  Repetition penalty. [default: 1.1]
+  --top-k, --top_k INTEGER        Top_k. [default: 0]
+  --top-p, --top_p FLOAT          Top_p. [default: 0.9]
+  --user-prompt TEXT              User prompt. [default: '翻成中文，列出3个版本.']
+  -p, --system-prompt TEXT        User defined system prompt. [default: 'You
+                                  are a helpful assistant.']
+  -v, -V, --version               Show version info and exit.
+  --help                          Show this message and exit.
 ```
 
 ## Develop and Debug

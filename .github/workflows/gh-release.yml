@@ -1,8 +1,7 @@
-# https://cloud.tencent.com/developer/article/1970730
-# name: .NET Core Release
-name: Nuitka Release
+# yamllint disable rule:line-length rule:comments-indentation
+name: Nuitka Release  # yamllint disable-line rule:document-start
 
-on:
+on:  # yamllint disable-line rule:truthy
   push:
     # Sequence of patterns matched against refs/tags
     tags:
@@ -21,6 +20,8 @@ jobs:
     # runs-on: ubuntu-latest
 
     steps:
+      - name: "Determine tag"
+        run: "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:
@@ -29,8 +30,9 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
 
-      - name: Install dependencies
-        run: poetry install
+      # maybe not necessary
+      # - name: Install dependencies
+        # run: poetry install
 
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       - uses: Nuitka/Nuitka-Action@main
@@ -41,14 +43,37 @@ jobs:
           onefile: true
 
       # Uploads artifact
-      # - name: Upload Artifact
-        # uses: actions/upload-artifact@v3
-        # with:
-          # name: exe
+      - name: Upload Artifact
+        run: "echo \" \""
+        uses: actions/upload-artifact@v3
+        with:
+          name: exe
           # path: build/hello_world.exe
+          path: build/qwen7b-tr.exe
 
-      # - name: python -m nuitka --standalone
-        # run: poetry run python -m nuitka --standalone qwen7b_tr
+      # https://localheinz.com/articles/2022/01/24/creating-releases-with-github-actions/
+      - name: "Create release"
+        uses: "actions/github-script@v6"
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+          script: |
+            try {
+              const response = await github.rest.repos.createRelease({
+                draft: false,
+                generate_release_notes: true,
+                name: process.env.RELEASE_TAG,
+                owner: context.repo.owner,
+                prerelease: false,
+                repo: context.repo.repo,
+                tag_name: process.env.RELEASE_TAG,
+              });
+
+              core.exportVariable('RELEASE_ID', response.data.id);
+              core.exportVariable('RELEASE_UPLOAD_URL', response.data.upload_url);
+            } catch (error) {
+              core.setFailed(error.message);
+            }
+
 
       # - name: Zip the Build
         # run: zip -r ${{ secrets.ReleaseZipName }} ./AppName/bin/Release/netcoreapp3.1/

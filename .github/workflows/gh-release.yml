@@ -43,12 +43,12 @@ jobs:
           onefile: true
 
       # Uploads artifact
-      # - name: Upload Artifact
-        # run: "echo \" \""
-        # uses: actions/upload-artifact@v3
-        # with:
-          # name: exe
-          # path: build/qwen7b-tr.exe
+      - name: Upload Artifact
+        run: "echo \" \""
+      - uses: actions/upload-artifact@v3
+        with:
+          name: exe
+          path: build/qwen7b-tr.exe
 
 
       # - name: Zip the Build

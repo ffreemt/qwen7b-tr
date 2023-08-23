@@ -1,7 +1,6 @@
-# yamllint disable rule:line-length rule:comments-indentation
 name: Nuitka Release
 
-on:  # yamllint disable-line rule:truthy
+on:
   push:
     # Sequence of patterns matched against refs/tags
     tags:

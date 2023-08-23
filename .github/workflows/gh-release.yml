@@ -40,12 +40,3 @@ jobs:
           # script-name: hello_world.py
           script-name: qwen7b-tr.py
           onefile: true
-
-      # Uploads artifact
-      - name: Upload Artifact
-        run: "echo \" \""
-        uses: actions/upload-artifact@v3
-        with:
-          name: exe
-          # path: build/hello_world.exe
-          path: build/qwen7b-tr.exe

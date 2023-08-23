@@ -44,7 +44,7 @@ jobs:
 
       # Uploads artifact
       - name: Upload Artifact
-        run: "echo \" \""
+        run: "echo \" **** upload artifact **** \""
       - uses: actions/upload-artifact@v3
         with:
           name: exe

@@ -41,6 +41,7 @@ jobs:
           # script-name: hello_world.py
           script-name: qwen7b-tr.py
           onefile: true
+          include-package: gradio-client
 
       # Uploads artifact
       - name: Upload Artifact

@@ -1,5 +1,5 @@
 # yamllint disable rule:line-length rule:comments-indentation
-name: Nuitka Release  # yamllint disable-line rule:document-start
+name: Nuitka Release
 
 on:  # yamllint disable-line rule:truthy
   push:

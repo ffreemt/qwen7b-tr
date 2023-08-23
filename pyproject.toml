@@ -25,6 +25,7 @@ pylint = "^2.14.2"
 pyright = "^1.1.254"
 pydocstyle = "^6.1.1"
 poethepoet = "^0.10.0"
+nuitka = "^1.7.10"
 
 [tool.poe.executor]
 type = "poetry"

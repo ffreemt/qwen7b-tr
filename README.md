@@ -6,7 +6,7 @@ Translate/Chat using a qwen-7b-chat API at huggingface
 ## Install it
 
 ```shell
-pip install qwen7b-tr
+pip install qwen7b-tr --upgrade
 # pip install git+https://github.com/ffreemt/qwen7b-tr
 # poetry add git+https://github.com/ffreemt/qwen7b-tr
 # git clone https://github.com/ffreemt/qwen7b-tr && cd qwen7b-tr

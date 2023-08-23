@@ -60,6 +60,7 @@ param_def = dict(
 )
 api_url = "https://mikeee-qwen-7b-chat.hf.space/"
 
+
 def qwen7b_tr(
     text: Optional[str] = None,
     max_new_tokens: Optional[int] = None,

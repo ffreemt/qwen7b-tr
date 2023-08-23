@@ -3,9 +3,9 @@ name: Nuitka Release  # yamllint disable-line rule:document-start
 
 on:  # yamllint disable-line rule:truthy
   push:
-    tags:
-      - "test*"  # for testing
-      - "v*"
+    # tags:
+      # - "test*"  # for testing
+      # - "v*"
 jobs:
   build:
     strategy:
@@ -34,7 +34,7 @@ jobs:
         run: poetry install
       - name: nuitka build
         run:
-          python -m nuitka --onefile --assume-yes-for-downloads qwen7b-tr.py
+          poetry run python -m nuitka --onefile --assume-yes-for-downloads qwen7b-tr.py
 
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
@@ -43,6 +43,7 @@ jobs:
           # script-name: qwen7b-tr.py
           # onefile: true
           # include-package: gradio-client
+          # include-module:: gradio_client.Client
 
       # Uploads artifact
       - name: Upload Artifact

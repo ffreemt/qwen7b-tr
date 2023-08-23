@@ -30,8 +30,8 @@ jobs:
           poetry-version: ${{ matrix.poetry-version }}
 
       # maybe not necessary
-      # - name: Install dependencies
-        # run: poetry install
+      - name: Install dependencies
+        run: poetry install
 
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       - uses: Nuitka/Nuitka-Action@main

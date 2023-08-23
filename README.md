@@ -90,7 +90,6 @@ python -m qwen7b_tr --help
 qwen7b-tr --help
 ```
 ```bash
-python -m qwen7b_tr --help
 Usage: python -m qwen7b_tr [OPTIONS] [QUESTION]...
 
   Translate via qwen-7b-chat huggingface API.

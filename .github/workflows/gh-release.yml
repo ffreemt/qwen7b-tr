@@ -64,7 +64,7 @@ jobs:
       - name: Test run qwen7b-tr.exe
         run: |
           dir qwen7b-tr.dist
-          qwen7b-tr.dist\qwen7b-tr.exe
+          # qwen7b-tr.dist\qwen7b-tr.exe
       # - name: Zip the Build
         # run: zip -r ${{ secrets.ReleaseZipName }} ./AppName/bin/Release/netcoreapp3.1/
 

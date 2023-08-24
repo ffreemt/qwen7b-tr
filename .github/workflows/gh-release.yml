@@ -29,13 +29,13 @@ jobs:
         with:
           poetry-version: ${{ matrix.poetry-version }}
 
-      # maybe not necessary
+      # not necessary if using Nuitka/Nuitka-Action@main
       - name: Install dependencies
         run: poetry install
       - name: nuitka build
         run:
           # poetry run python -m nuitka --onefile --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
-          poetry run python -m nuitka --standalone --assume-yes-for-downloads --follow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
+          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr qwen7b-tr.py
 
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
@@ -47,14 +47,12 @@ jobs:
           # include-module:: gradio_client.Client
 
       # Uploads artifact
-      - name: Upload Artifact
-        run: "echo \" **** upload artifact **** \""
-      - uses: actions/upload-artifact@v3
-        with:
-          name: exe
-          # path: build/qwen7b-tr.exe
-          # path: qwen7b-tr.dist/qwen7b-tr.exe
-          path: qwen7b-tr.dist
+      # - name: Upload Artifact
+        # run: "echo \" **** upload artifact **** \""
+      # - uses: actions/upload-artifact@v3
+        # with:
+          # name: exe
+          # path: qwen7b-tr.dist
 
       # testrun
       - name: Test run qwen7b-tr.exe

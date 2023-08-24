@@ -89,8 +89,7 @@ python -m qwen7b_tr --help
 # or
 qwen7b-tr --help
 ```
-<details>
-<summary>Click to see details</summary>
+
 ```bash
 Usage: python -m qwen7b_tr [OPTIONS] [QUESTION]...
 
@@ -118,7 +117,6 @@ Options:
   -v, -V, --version               Show version info and exit.
   --help                          Show this message and exit.
 ```
-</details>
 
 ## Develop and Debug
 ```

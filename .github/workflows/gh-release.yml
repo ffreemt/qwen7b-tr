@@ -22,7 +22,10 @@ jobs:
       - name: "Determine tag"
         run: |
           echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}"
-          "echo \"RELEASE_TAG=${GITHUB_REF#refs/tags/}\" >> $GITHUB_ENV"
+          echo "RELEASE_TAG=${GITHUB_REF#refs/tags/} >> $GITHUB_ENV"
+      - name: "Use RELEASE_TAG"
+        run: |
+          echo "The release tag is $RELEASE_TAG"
       - uses: actions/checkout@v3
       - uses: actions/setup-python@v4
         with:

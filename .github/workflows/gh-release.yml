@@ -3,9 +3,9 @@ name: Nuitka Release  # yamllint disable-line rule:document-start
 
 on:  # yamllint disable-line rule:truthy
   push:
-    # tags:
-      # - "test*"  # for testing
-      # - "v*"
+    tags:
+      - "test*"  # for testing
+      - "v*"
 jobs:
   build:
     strategy:
@@ -23,6 +23,7 @@ jobs:
         run: |
           echo "RELEASE_TAG=${GITHUB_REF#refs/tags/}"
           echo "RELEASE_TAG=${GITHUB_REF#refs/tags/} >> $GITHUB_ENV"
+          echo ${{ env.RELEASE_TAG }}
       - name: "Use RELEASE_TAG"
         run: |
           echo "The release tag is $RELEASE_TAG"
@@ -40,7 +41,7 @@ jobs:
       - name: nuitka build
         run:
           # poetry run python -m nuitka --onefile --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
-          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr qwen7b-tr.py
+          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr --follow-import-to=gradio_client  qwen7b-tr.py
 
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
@@ -52,12 +53,12 @@ jobs:
           # include-module:: gradio_client.Client
 
       # Uploads artifact
-      # - name: Upload Artifact
-        # run: "echo \" **** upload artifact **** \""
-      # - uses: actions/upload-artifact@v3
-        # with:
-          # name: exe
-          # path: qwen7b-tr.dist
+      - name: Upload Artifact
+        run: "echo \" **** upload artifact **** \""
+      - uses: actions/upload-artifact@v3
+        with:
+          name: qwen7b-tr
+          path: qwen7b-tr.dist
 
       # testrun
       - name: Test run qwen7b-tr.exe

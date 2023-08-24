@@ -39,10 +39,15 @@ jobs:
       - name: Install dependencies
         run: poetry install
       - name: nuitka build
-        run:
+        run: |
           # poetry run python -m nuitka --onefile --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
-          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr --follow-import-to=gradio_client  qwen7b-tr.py
-
+          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr `
+          --follow-import-to=gradio_client `
+          --follow-import-to=websockets.legacy.client `
+          qwen7b-tr.py
+          mkdir qwen7b-tr.dist\gradio_client
+          copy .venv\Lib\site-packages\gradio_client\version.txt qwen7b-tr.dist\gradio_client
+          copy .venv\Lib\site-packages\gradio_client\types.json qwen7b-tr.dist\gradio_client
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
         # with:
@@ -64,7 +69,7 @@ jobs:
       - name: Test run qwen7b-tr.exe
         run: |
           dir qwen7b-tr.dist
-          # qwen7b-tr.dist\qwen7b-tr.exe
+          qwen7b-tr.dist\qwen7b-tr.exe test me and him
       # - name: Zip the Build
         # run: zip -r ${{ secrets.ReleaseZipName }} ./AppName/bin/Release/netcoreapp3.1/
 

@@ -34,7 +34,8 @@ jobs:
         run: poetry install
       - name: nuitka build
         run:
-          poetry run python -m nuitka --onefile --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
+          # poetry run python -m nuitka --onefile --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
+          poetry run python -m nuitka --standalone --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
 
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
@@ -52,9 +53,14 @@ jobs:
         with:
           name: exe
           # path: build/qwen7b-tr.exe
-          path: qwen7b-tr.dist/qwen7b-tr.exe
+          # path: qwen7b-tr.dist/qwen7b-tr.exe
+          path: qwen7b-tr.dist
 
-
+      # testrun
+      - name: Test run qwen7b-tr.exe
+        run: |
+          dir qwen7b-tr.dist
+          qwen7b-tr.dist\qwen7b-tr.exe
       # - name: Zip the Build
         # run: zip -r ${{ secrets.ReleaseZipName }} ./AppName/bin/Release/netcoreapp3.1/
 

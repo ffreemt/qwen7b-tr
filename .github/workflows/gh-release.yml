@@ -44,7 +44,7 @@ jobs:
           poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr `
           --follow-import-to=gradio_client `
           --follow-import-to=websockets.legacy.client `
-          --include-package=websockets
+          --include-package=websockets `
           qwen7b-tr.py
           mkdir qwen7b-tr.dist\gradio_client
           copy .venv\Lib\site-packages\gradio_client\version.txt qwen7b-tr.dist\gradio_client

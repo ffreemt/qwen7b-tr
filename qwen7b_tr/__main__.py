@@ -28,6 +28,7 @@ import typer
 from gradio_client import Client
 from loguru import logger
 from rich import print
+from rich.console import Console
 
 from qwen7b_tr import __version__
 
@@ -36,6 +37,8 @@ from qwen7b_tr import __version__
 # logger.add(sys.stderr, level="TRACE")
 
 del Path
+
+console = Console()
 
 app = typer.Typer(
     name="qwen7b-tr",
@@ -99,6 +102,8 @@ def qwen7b_tr(
     for elm in param_def:
         if locals_[elm] is None:
             locals_[f"{elm}"] = param_def.get(elm)
+
+    # logger.trace(f"{locals()=}")
     logger.trace(f"{locals_=}")
 
     # params to be used
@@ -108,7 +113,7 @@ def qwen7b_tr(
     # use the param_  below e.g.
     # max_new_tokens_, temperature_ ...
 
-    # handle top_k
+    # handle top_k repetition_penalty
     try:
         repetition_penalty_ = float(locals_["repetition_penalty"])
     except Exception:
@@ -184,7 +189,7 @@ def main(
         help=f"Max new tokens. [default: {param_def.get('max_new_tokens')}]",
         show_default=False,
     ),
-    temperature: Optional[int] = typer.Option(
+    temperature: Optional[float] = typer.Option(
         None,
         "--temperature",
         "--temp",
@@ -225,7 +230,7 @@ def main(
         help="User defined system prompt. [default: 'You are a helpful assistant.']",
         show_default=False,
     ),
-    version: Optional[bool] = typer.Option(  # pylint: disable=(unused-argument
+    version: Optional[bool] = typer.Option(  # pylint: disable=unused-argument
         None,
         "--version",
         "-v",
@@ -299,12 +304,21 @@ def main(
     ).strip()
     logger.trace(f"{text=}")
 
-    typer.secho("\tdiggin...", fg=typer.colors.MAGENTA)
-    try:
-        res = qwen7b_tr(text)
-    except Exception as exc:
-        logger.error(exc)
-        raise typer.Exit()
+    # typer.secho("\tdiggin...", fg=typer.colors.MAGENTA)
+    with console.status("diggin...", spinner="bouncingBar"):
+        try:
+            res = qwen7b_tr(
+                text,
+                max_new_tokens=max_new_tokens,
+                temperature=temperature,
+                repetition_penalty=repetition_penalty,
+                top_k=top_k,
+                top_p=top_p,
+                system_prompt=system_prompt,
+            )
+        except Exception as exc:
+            logger.error(exc)
+            raise typer.Exit()
     print()
     print(text_str)
     print()

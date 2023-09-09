@@ -118,6 +118,46 @@ Options:
   --help                          Show this message and exit.
 ```
 
+## More Examples
+### temperature
+```
+# default temperature 0.81
+python -m qwen7b_tr marketing is critical to ensure fan interest remains high
+
+1. 营销对于确保粉丝的兴趣保持高水平至关重要。
+2. 市场营销对于维持粉丝的兴趣至关重要。
+3. 粉丝的兴趣水平需要通过有效的市场营销来保持。
+```
+
+```
+# a high temperature reuslts in a versatile outcome
+python -m qwen7b_tr --temp 1.1 marketing is critical to ensure fan interest remains high
+
+1. 营销至关重要，以确保球迷的兴趣继续保持高水平。
+2. 营销工作是至关重要的，以保持球迷的兴趣。
+3. 推广是保持球迷关注度的关键。
+```
+A very high temperature (for example 1.5) may result in  some nonsensical output.
+
+### `-n`: number of translation variants
+If you wish to have more choices, for example 5 variants
+```
+python -m qwen7b_tr -n 5 marketing campaign companion
+
+  1. 营销活动伙伴
+  2. 市场营销活动伴侣
+  3. 营销活动助手
+  4. 市场营销活动支持者
+  5. 营销活动协作者
+
+```
+### max new tokens
+
+The default `max_new_tokens` is 256, sutiable for chatting. If you translate a large chunk of text. you may wish to set `max_new_tokens` to 1024.
+```
+python -m qwen7b_tr --max-new-tokens 1024 blah blah ...
+```
+
 ## Develop and Debug
 ```
 set LOGURU_LEVEL=TRACE

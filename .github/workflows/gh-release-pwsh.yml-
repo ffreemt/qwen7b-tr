@@ -17,11 +17,7 @@ jobs:
         os: [windows-latest]
     runs-on: ${{ matrix.os }}
     # runs-on: ubuntu-latest
-    defaults:
-      run:
-        # shell: pwsh
-        # shell: cmd
-        shell: bash
+
     steps:
       - name: "Determine tag"
         run: |
@@ -46,14 +42,14 @@ jobs:
       - name: nuitka build
         run: |
           # poetry run python -m nuitka --onefile --assume-yes-for-downloads --nofollow-imports --follow-import-to=qwen7b_tr qwen7b-tr.py
-          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr \
-          --follow-import-to=gradio_client \
-          --follow-import-to=websockets.legacy.client \
-          --include-package=websockets \
+          poetry run python -m nuitka --standalone --assume-yes-for-downloads --include-package=gradio_client --include-module=huggingface_hub.hf_api --follow-import-to=qwen7b_tr `
+          --follow-import-to=gradio_client `
+          --follow-import-to=websockets.legacy.client `
+          --include-package=websockets `
           qwen7b-tr.py
-          mkdir qwen7b-tr.dist/gradio_client
-          copy .venv/Lib/site-packages/gradio_client/version.txt qwen7b-tr.dist/gradio_client
-          copy .venv/Lib/site-packages/gradio_client/types.json qwen7b-tr.dist/gradio_client
+          mkdir qwen7b-tr.dist\gradio_client
+          copy .venv\Lib\site-packages\gradio_client\version.txt qwen7b-tr.dist\gradio_client
+          copy .venv\Lib\site-packages\gradio_client\types.json qwen7b-tr.dist\gradio_client
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
         # with:
@@ -75,21 +71,7 @@ jobs:
       - name: Test run qwen7b-tr.exe
         run: |
           dir qwen7b-tr.dist
-          qwen7b-tr.dist/qwen7b-tr.exe test me and him
-
-      - name: Zip the Build
-        run: tar acf qwen7b-tr-${{  github.ref_name }}.zip ./qwen7b-tr.dist
-
-      # https://github.com/ffreemt/qwen7b-tr/settings/actions Workflow permissions: write and read
-      - name: Publish Release
-        run: |
-          # gh release upload --clobber ${{ steps.version.outputs.TAG_NAME }} dist/*.tar.gz dist/*.whl
-          # gh release upload qwen7b-tr-${{  github.ref_name }}.zip
-
-          gh release create ${{  github.ref_name }} --generate-notes qwen7b-tr-${{  github.ref_name }}.zip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+          qwen7b-tr.dist\qwen7b-tr.exe test me and him
       # - name: Zip the Build
         # run: zip -r ${{ secrets.ReleaseZipName }} ./AppName/bin/Release/netcoreapp3.1/
 

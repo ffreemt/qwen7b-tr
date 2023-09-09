@@ -11,12 +11,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: [3.8]
+        python-version: ["3.10"]  # must quote 0
         poetry-version: [1.5.1]
         # os: [ubuntu-20.04, macos-latest, windows-latest]
         os: [windows-latest]
     runs-on: ${{ matrix.os }}
-    # runs-on: ubuntu-latest
     defaults:
       run:
         # shell: pwsh
@@ -52,8 +51,8 @@ jobs:
           --include-package=websockets \
           qwen7b-tr.py
           mkdir qwen7b-tr.dist/gradio_client
-          copy .venv/Lib/site-packages/gradio_client/version.txt qwen7b-tr.dist/gradio_client
-          copy .venv/Lib/site-packages/gradio_client/types.json qwen7b-tr.dist/gradio_client
+          cp .venv/Lib/site-packages/gradio_client/version.txt qwen7b-tr.dist/gradio_client
+          cp .venv/Lib/site-packages/gradio_client/types.json qwen7b-tr.dist/gradio_client
       # https://github.com/marketplace/actions/build-executables-or-extension-modules-from-python-projects#usage-details
       # - uses: Nuitka/Nuitka-Action@main
         # with:
@@ -78,7 +77,7 @@ jobs:
           qwen7b-tr.dist/qwen7b-tr.exe test me and him
 
       - name: Zip the Build
-        run: tar acf qwen7b-tr-${{  github.ref_name }}.zip ./qwen7b-tr.dist
+        run: tar acf qwen7b-tr-${{ github.ref_name }}.zip ./qwen7b-tr.dist
 
       # https://github.com/ffreemt/qwen7b-tr/settings/actions Workflow permissions: write and read
       - name: Publish Release
